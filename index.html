@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regulometer - Every law has a price tag</title>
+    <meta name="description" content="Regulometer measures what rules cost the people who have to follow them. First case study: Uzbekistan's E-aktiv asset-reporting rule.">
+    <link rel="canonical" href="https://regulometer.com/">
+    <meta property="og:title" content="Regulometer - Every law has a price tag">
+    <meta property="og:description" content="Measuring the compliance cost of laws in Uzbekistan. Started August 2026.">
+    <meta property="og:url" content="https://regulometer.com/">
+    <meta property="og:type" content="website">
+    <style>
+:root{
+ --navy:#0c0c0c; --primary:#cc0000; --primary-hover:#a30000; --primary-light:#faf0f0;
+ --bg-page:#ffffff; --bg-soft:#f5f6f8; --border:#e3e6ec;
+ --text-main:#1a2236; --text-muted:#5b6475;
+ --shadow-sm:0 1px 2px rgba(0,0,0,.06); --shadow-md:0 2px 10px rgba(0,0,0,.06);
+ --serif:Georgia,"Times New Roman",serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.7;color:var(--text-main);margin:0;background:var(--bg-page)}
+strong{color:var(--navy)}
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 32px;height:72px;display:flex;align-items:center;justify-content:space-between;gap:32px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:700;font-size:1.25rem;color:var(--navy);white-space:nowrap}
+.logo-mark{width:30px;height:30px;border-radius:6px;background:var(--navy);display:grid;place-items:center;color:#fff;font-size:.85rem;font-weight:700}
+.logo b{color:var(--primary);font-weight:700}
+.nav-right{display:flex;align-items:center;gap:44px;height:100%}
+.tabs-container{display:flex;gap:44px;height:100%}
+.tab-btn{background:none;border:none;height:100%;padding:0 6px;font:inherit;font-size:.95rem;font-weight:600;color:var(--text-muted);cursor:pointer;position:relative;transition:color .2s;white-space:nowrap}
+.tab-btn::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;background:var(--navy);transform:scaleX(0);transition:transform .2s}
+.tab-btn:hover,.tab-btn.active{color:var(--navy)}
+.tab-btn.active::after{transform:scaleX(1)}
+.tab-btn:focus-visible,.lang-btn:focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:4px}
+.nav-divider{width:1px;height:28px;background:var(--border)}
+.lang-toggle{display:flex;border:1px solid var(--border);border-radius:8px;padding:3px;background:#fff}
+.lang-btn{background:none;border:none;padding:5px 12px;border-radius:5px;cursor:pointer;font-weight:700;font-size:.78rem;color:var(--text-muted)}
+.lang-btn.active{background:var(--navy);color:#fff}
+/* language switching: body.uz shows Uzbek, otherwise English */
+.lang-uz{display:none}
+body.uz .lang-en{display:none}
+body.uz .lang-uz{display:revert}
+/* HERO */
+.hero{max-width:1100px;margin:0 auto;padding:72px 28px 8px;text-align:center}
+.eyebrow{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--primary)}
+.hero h1{font-family:var(--serif);font-size:clamp(2.1rem,5vw,3.5rem);line-height:1.15;letter-spacing:-.01em;margin:18px auto;max-width:800px;font-weight:700;color:var(--navy)}
+.hero h1 em{font-style:italic;color:var(--primary)}
+.hero p.sub{max-width:620px;margin:0 auto;color:var(--text-muted);font-size:1.08rem}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);margin-top:48px;background:var(--navy);border-radius:14px;overflow:hidden}
+.stat{padding:26px 16px;border-right:1px solid rgba(255,255,255,.12)}
+.stat:last-child{border-right:none}
+.stat b{display:block;font-family:var(--serif);font-size:1.8rem;font-weight:700;line-height:1.2;color:#fff}
+.stat span{font-size:.75rem;color:#bdbdbd;text-transform:uppercase;letter-spacing:.1em}
+/* MAIN */
+.container{max-width:1000px;margin:40px auto 60px;background:#fff;border-radius:14px;border:1px solid var(--border);box-shadow:var(--shadow-md);overflow:hidden}
+.tab-pane{display:none;padding:48px;animation:fadeIn .3s ease}
+.tab-pane.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2{font-family:var(--serif);font-size:1.7rem;color:var(--navy);margin:0 0 20px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+h3{font-size:.85rem;margin-top:44px;color:var(--primary);font-weight:700;text-transform:uppercase;letter-spacing:.12em}
+p{margin:0 0 1.2rem;color:#3a4357}
+ul{padding-left:20px;color:#3a4357}li{margin-bottom:8px}li::marker{color:var(--primary)}
+em{color:inherit}
+.highlight-box{background:var(--primary-light);border-left:4px solid var(--primary);padding:22px 24px;margin:28px 0;border-radius:6px;color:var(--navy)}
+table{width:100%;border-collapse:separate;border-spacing:0;margin:25px 0;font-size:.93rem;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+th,td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--border);color:#3a4357}
+th{background:var(--bg-soft);font-weight:700;color:var(--navy);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg-soft)}
+/* CALCULATOR */
+.calculator-wrapper{background:var(--bg-soft);border:1px solid var(--border);border-radius:12px;padding:40px 36px 32px;margin-top:56px;position:relative}
+.calculator-badge{position:absolute;top:-12px;left:36px;background:var(--navy);color:#fff;font-size:.7rem;font-weight:700;padding:4px 12px;border-radius:4px;letter-spacing:.14em}
+.control-group{margin-bottom:26px}
+.control-header{display:flex;justify-content:space-between;gap:12px;margin-bottom:12px;font-size:.95rem;font-weight:600;color:var(--navy)}
+.control-header span:last-child{color:var(--primary);background:#fff;border:1px solid var(--border);padding:2px 10px;border-radius:6px;font-weight:700;white-space:nowrap}
+input[type=range]{width:100%;cursor:pointer;accent-color:var(--primary);height:6px}
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:40px}
+.metric-card{background:#fff;padding:26px;border-radius:10px;border:1px solid var(--border);border-top:3px solid var(--navy)}
+.metric-title{font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:10px;font-weight:700}
+.metric-value-uzs{font-family:var(--serif);font-size:1.6rem;font-weight:700;margin-bottom:4px;color:var(--navy);word-break:break-word}
+.metric-value-usd{font-size:1.05rem;color:var(--primary);font-weight:600}
+/* ABOUT */
+.author-bio{display:flex;gap:25px;margin-top:32px;background:var(--bg-soft);padding:32px;border-radius:10px;border-left:4px solid var(--navy)}
+.author-bio p{color:var(--text-muted)}
+footer{text-align:center;color:var(--text-muted);font-size:.8rem;padding:0 20px 40px}
+@media(max-width:850px){
+ .nav-inner{flex-wrap:wrap;height:auto;padding:12px 18px 0;row-gap:0;gap:12px}
+ .nav-right{display:contents}
+ .nav-divider{display:none}
+ .lang-toggle{order:2}
+ .tabs-container{order:3;flex:0 0 100%;justify-content:space-between;gap:12px;height:48px;border-top:1px solid var(--border);margin-top:8px}
+ .tab-btn{font-size:.9rem;padding:0 4px}
+ .stats{grid-template-columns:1fr 1fr}
+ .stat:nth-child(2){border-right:none}.stat:nth-child(-n+2){border-bottom:1px solid rgba(255,255,255,.12)}
+ .metrics-grid{grid-template-columns:1fr}
+ .tab-pane{padding:26px 20px}.calculator-wrapper{padding:32px 20px 24px}
+ .hero{padding-top:48px}
+ table{display:block;overflow-x:auto;white-space:nowrap}
+}
+
+/* readability + new blocks */
+p{font-size:1.06rem;line-height:1.75}
+.tab-pane>div>p,.tab-pane>div>ul{max-width:70ch}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:20px 0 8px}
+.card{border:1px solid var(--border);border-top:4px solid var(--primary);border-radius:10px;padding:22px;background:#fff}
+.card h4{margin:0 0 8px;font-family:var(--serif);font-size:1.15rem;color:var(--navy);line-height:1.3}
+.card p{margin:0;font-size:.95rem;line-height:1.6;color:var(--text-muted)}
+.case-label{margin:56px 0 28px;padding:20px 24px;background:var(--navy);color:#fff;border-radius:10px}
+.case-label small{display:block;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#bdbdbd;margin-bottom:4px}
+.case-label b{font-family:var(--serif);font-size:1.4rem;display:block;line-height:1.3}
+.pull{font-family:var(--serif);font-size:1.5rem;line-height:1.35;color:var(--navy);border-left:4px solid var(--primary);margin:24px 0;padding:4px 0 4px 22px;max-width:640px}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:20px 0}
+.fact{background:var(--bg-soft);border-radius:10px;padding:24px 16px;text-align:center}
+.fact b{display:block;font-family:var(--serif);font-size:2.1rem;color:var(--primary);line-height:1.1}
+.fact span{display:block;font-size:.85rem;color:var(--text-muted);margin-top:8px;line-height:1.45}
+.bar{display:flex;height:34px;border-radius:8px;overflow:hidden;margin:18px 0 8px;font-size:.78rem;font-weight:700;color:#fff}
+.bar i{display:flex;align-items:center;justify-content:center;font-style:normal}
+.legend{font-size:.85rem;color:var(--text-muted);margin:0 0 20px}
+.note{font-size:.8rem;color:var(--text-muted);margin-top:14px}
+.didyou{background:var(--primary-light);border-left:4px solid var(--primary);padding:16px 20px;border-radius:6px;font-size:.98rem;max-width:70ch;margin-top:8px}
+@media(max-width:850px){.cards{grid-template-columns:1fr}.facts{grid-template-columns:1fr 1fr}.pull{font-size:1.25rem}}
+
+.concl{list-style:none;counter-reset:c;padding:0;margin:20px 0;max-width:760px}
+.concl li{counter-increment:c;position:relative;padding:0 0 22px 56px;margin:0}
+.concl li::before{content:counter(c);position:absolute;left:0;top:0;width:36px;height:36px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--serif);font-weight:700;display:grid;place-items:center}
+.concl b{display:block;font-family:var(--serif);font-size:1.15rem;color:var(--navy);margin-bottom:2px}
+.concl span{color:#3a4357;font-size:1.02rem;line-height:1.65}
+.ref{font-size:.72rem;color:var(--primary);font-weight:700;margin-left:2px}
+.refs{padding-left:22px;font-size:.92rem;color:#3a4357;max-width:760px}
+.refs li{margin-bottom:10px}.refs a{color:var(--primary);font-weight:700}
+
+/* ---- added blocks ---- */
+.lead{font-size:1.18rem;color:var(--navy);max-width:70ch}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0;counter-reset:s}
+.step{background:var(--bg-soft);border-radius:10px;padding:20px 18px;position:relative;counter-increment:s}
+.step::before{content:counter(s);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--primary);color:#fff;font-family:var(--serif);font-weight:700;margin-bottom:10px}
+.step b{display:block;font-family:var(--serif);color:var(--navy);margin-bottom:4px}
+.step span{font-size:.92rem;line-height:1.55;color:var(--text-muted)}
+.table-wrap{overflow-x:auto}
+.table-wrap table{margin:16px 0}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+tr.base td{background:var(--primary-light);font-weight:700;color:var(--navy)}
+.glossary{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}
+.glossary div{border:1px solid var(--border);border-radius:10px;padding:16px 18px;background:#fff}
+.glossary dt{font-family:var(--serif);font-weight:700;color:var(--navy);margin-bottom:4px}
+.glossary dd{margin:0;font-size:.93rem;line-height:1.55;color:var(--text-muted)}
+.glossary dl{display:contents}
+details{border:1px solid var(--border);border-radius:10px;margin:10px 0;background:#fff;max-width:820px}
+summary{cursor:pointer;padding:16px 20px;font-weight:700;color:var(--navy);list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--primary);font-size:1.3rem;line-height:1}
+details[open] summary::after{content:"\2212"}
+details[open] summary{border-bottom:1px solid var(--border)}
+details p{padding:16px 20px 0;margin:0 0 .2rem;font-size:1rem}
+details p:last-child{padding-bottom:16px}
+.timeline{list-style:none;margin:24px 0;padding:0 0 0 26px;border-left:3px solid var(--border);max-width:760px}
+.timeline li{position:relative;padding:0 0 26px 22px;margin:0}
+.timeline li::before{content:"";position:absolute;left:-36px;top:5px;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--primary)}
+.timeline small{display:block;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--primary)}
+.timeline b{font-family:var(--serif);font-size:1.12rem;color:var(--navy);display:block;margin:2px 0}
+.timeline span{font-size:.97rem;color:#3a4357;line-height:1.6}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:20px 0}
+.two .card{border-top-color:var(--navy)}
+.two .card.red{border-top-color:var(--primary)}
+.two ul{margin:8px 0 0;padding-left:18px}.two li{font-size:.95rem;margin-bottom:6px}
+.badge-row{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 20px}
+.badge{font-size:.78rem;font-weight:700;letter-spacing:.04em;padding:5px 12px;border-radius:999px;background:var(--bg-soft);border:1px solid var(--border);color:var(--navy)}
+.badge.warn{background:var(--primary-light);border-color:#f0cccc;color:var(--primary)}
+.roadmap{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:20px 0}
+.roadmap .card small{display:block;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);margin-bottom:6px}
+.cta{background:var(--navy);color:#fff;border-radius:12px;padding:28px 30px;margin:36px 0 8px}
+.cta h4{font-family:var(--serif);font-size:1.3rem;margin:0 0 8px;color:#fff}
+.cta p{color:#d6d6d6;margin:0;font-size:1rem}
+@media(max-width:850px){.steps,.glossary,.two,.roadmap{grid-template-columns:1fr}.cta{padding:22px}}
+
+/* ---- visual polish ---- */
+body{background:#f3f4f7}
+
+.nav-inner{height:68px}
+.hero{max-width:none;margin:0;padding:72px 28px 56px;background:linear-gradient(180deg,#fff 0%,#f9eeee 100%);border-bottom:1px solid var(--border)}
+.hero>*{max-width:1044px;margin-left:auto;margin-right:auto}
+.hero h1,.hero p.sub{margin-left:auto;margin-right:auto}
+.eyebrow{background:var(--primary-light);border:1px solid #f0cccc;padding:6px 14px;border-radius:999px}
+.stats{box-shadow:0 8px 24px rgba(0,0,0,.14)}
+.stat b{color:#ff6b6b}
+.container{margin-top:36px;box-shadow:0 4px 20px rgba(0,0,0,.07)}
+
+.card{background:linear-gradient(180deg,#fff,#fafbfc);box-shadow:var(--shadow-sm);transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.09)}
+.fact{background:#fff;border:1px solid var(--border);border-bottom:3px solid var(--primary)}
+.step{background:#fff;border:1px solid var(--border)}
+.glossary div{background:var(--bg-soft)}
+.calculator-wrapper{background:linear-gradient(180deg,#f7f8fa,#eef0f4);border-color:#d9dde6}
+.metric-card:last-child{border-top-color:var(--primary)}
+.metric-card:last-child .metric-value-uzs{color:var(--primary)}
+.case-label{background:linear-gradient(120deg,#0c0c0c,#2a0a0a);border-left:5px solid var(--primary)}
+.cta{background:linear-gradient(120deg,#0c0c0c,#3a0d0d)}
+.didyou{border-radius:8px}
+footer{background:var(--navy);color:#bdbdbd;padding:26px 20px;margin-top:20px}
+footer b{color:#fff}
+@media(max-width:850px){.hero{padding:44px 18px 36px}.nav-inner{height:auto}}
+
+/* ---- calmer palette: red only as a small accent ---- */
+.nav{box-shadow:0 1px 8px rgba(0,0,0,.05)}
+.hero{background:linear-gradient(180deg,#fff 0%,#eef1f6 100%)}
+.eyebrow{background:#fff;border:1px solid var(--border)}
+.stat b{color:#fff}
+h3{color:var(--navy)}
+li::marker{color:var(--navy)}
+.card{border-top-color:var(--navy)}
+.card h4{color:var(--navy)}
+.fact{border-bottom-color:var(--navy)}
+.fact b{color:var(--navy)}
+.step::before{background:var(--navy)}
+.timeline li::before{border-color:var(--navy)}
+.timeline small,.roadmap .card small{color:var(--text-muted)}
+.highlight-box{background:var(--bg-soft);border-left-color:var(--navy)}
+.didyou{background:#eef1f6;border-left-color:var(--navy)}
+.pull{border-left-color:var(--navy)}
+.control-header span:last-child{color:var(--navy)}
+input[type=range]{accent-color:var(--navy)}
+.metric-card:last-child{border-top-color:var(--navy)}
+.metric-card:last-child .metric-value-uzs{color:var(--navy)}
+.metric-value-usd{color:var(--text-muted)}
+.case-label{background:var(--navy);border-left:none}
+.cta{background:var(--navy)}
+.badge.warn{background:var(--bg-soft);border-color:var(--border);color:var(--navy)}
+tr.base td{background:var(--bg-soft)}
+.ref,.refs a{color:var(--text-muted)}
+footer b span{color:#fff!important}
+
+/* ---- red accents restored from "Why legal systems need a tool like this" onward (hero stays calm) ---- */
+.container h3{color:var(--primary)}
+.container li::marker{color:var(--primary)}
+.container .card{border-top-color:var(--primary)}
+.container .two .card{border-top-color:var(--navy)}
+.container .two .card.red{border-top-color:var(--primary)}
+.container .card h4{color:var(--navy)}
+.container .fact{border-bottom-color:var(--primary)}
+.container .fact b{color:var(--primary)}
+.container .step::before{background:var(--primary)}
+.container .timeline li::before{border-color:var(--primary)}
+.container .timeline small,.container .roadmap .card small{color:var(--primary)}
+.container .highlight-box{background:var(--primary-light);border-left-color:var(--primary)}
+.container .didyou{background:var(--primary-light);border-left-color:var(--primary)}
+.container .pull{border-left-color:var(--primary)}
+.container .control-header span:last-child{color:var(--primary)}
+.container input[type=range]{accent-color:var(--primary)}
+.container .metric-card:last-child{border-top-color:var(--primary)}
+.container .metric-card:last-child .metric-value-uzs{color:var(--primary)}
+.container .metric-value-usd{color:var(--primary)}
+.container .case-label{background:linear-gradient(120deg,#0c0c0c,#2a0a0a);border-left:5px solid var(--primary)}
+.container .cta{background:linear-gradient(120deg,#0c0c0c,#3a0d0d)}
+.container .badge.warn{background:var(--primary-light);border-color:#f0cccc;color:var(--primary)}
+.container tr.base td{background:var(--primary-light)}
+.container .ref,.container .refs a{color:var(--primary)}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Main"><div class="nav-inner">
+  <div class="logo"><span class="logo-mark">R</span><span>Regulo<b>meter</b></span></div>
+  <div class="nav-right">
+    <div class="tabs-container" role="tablist">
+      <button class="tab-btn active" id="tab-assessment" role="tab" onclick="switchTab('assessment')"><span class="lang-en">Assessment</span><span class="lang-uz">Baholash</span></button>
+      <button class="tab-btn" id="tab-research" role="tab" onclick="switchTab('research')"><span class="lang-en">Research</span><span class="lang-uz">Tadqiqot</span></button>
+      <button class="tab-btn" id="tab-about" role="tab" onclick="switchTab('about')"><span class="lang-en">About Project</span><span class="lang-uz">Loyiha haqida</span></button>
+    </div>
+    <span class="nav-divider" aria-hidden="true"></span>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLanguage('en')">EN</button>
+      <button class="lang-btn" id="btn-uz" onclick="setLanguage('uz')">UZ</button>
+    </div>
+  </div>
+</div></nav>
+
+<header class="hero" id="hero">
+  <div class="lang-en">
+    <span class="eyebrow">Regulatory Impact Assessment</span>
+    <h1>Every law has a <em>price tag</em>. We measure it.</h1>
+    <p class="sub">Regulometer measures what rules cost the people who have to follow them. Our first example: Uzbekistan's E-aktiv asset-reporting rule.</p>
+  </div>
+  <div class="lang-uz">
+    <span class="eyebrow">Tartibga solish ta'sirini baholash</span>
+    <h1>Har bir qonunning <em>narxi</em> bor. Biz uni o'lchaymiz.</h1>
+    <p class="sub">Regulometer qoidalarga rioya qilishga majbur bo'lganlar uchun ular qancha turishini o'lchaydi. Birinchi misolimiz: O'zbekistonning E-aktiv aktivlar hisoboti qoidasi.</p>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>1.144T</b><span>UZS / yr</span></div>
+    <div class="stat"><b>~$90M</b><span>USD / yr</span></div>
+    <div class="stat"><b>286 h</b><span>per SME / yr</span></div>
+    <div class="stat"><b>100K</b><span>SMEs</span></div>
+  </div>
+  <div class="note"><span class="lang-en">Example case: E-aktiv, Uzbekistan. Figures are model estimates. Project started in August 2026.</span><span class="lang-uz">Misol: E-aktiv, O'zbekiston. Raqamlar model bo'yicha taxminiy. Loyiha 2026-yil avgustda boshlangan.</span></div>
+</header>
+
+<div class="container">
+
+    <!-- TAB 1: ASSESSMENT & CALCULATOR -->
+    <div id="pane-assessment" class="tab-pane active">
+        <div class="lang-en">
+            <h2>Why legal systems need a tool like this</h2>
+            <p>Regulometer turns a law's hidden paperwork into numbers anyone can read, question and improve.</p>
+            <div class="cards"><div class="card"><h4>Laws arrive without a price tag</h4><p>Rules are debated for their goals. Their cost to the people who must follow them is rarely counted.</p></div><div class="card"><h4>Small tasks add up</h4><p>One hour a day sounds harmless. Across 100,000 businesses it is 25 million hours a year.</p></div><div class="card"><h4>Measured laws get better</h4><p>When costs are visible, lawmakers can compare options, like daily or weekly reporting, before a rule is adopted.</p></div></div>
+        </div>
+        <div class="lang-uz">
+            <h2>Nega huquqiy tizimlarga bunday vosita kerak</h2>
+            <p>Regulometer qonunning yashirin qog'ozbozligini har kim o'qiy oladigan, tekshira oladigan va yaxshilay oladigan raqamlarga aylantiradi.</p>
+            <div class="cards"><div class="card"><h4>Qonunlar narx belgisiz keladi</h4><p>Qoidalar maqsadi bo'yicha muhokama qilinadi. Unga amal qiluvchilar uchun xarajati kamdan-kam hisoblanadi.</p></div><div class="card"><h4>Kichik vazifalar yig'iladi</h4><p>Kuniga bir soat zararsiz tuyuladi. 100 000 ta biznes miqyosida bu yiliga 25 million soat.</p></div><div class="card"><h4>O'lchangan qonunlar yaxshilanadi</h4><p>Xarajat ko'rinsa, qonun chiqaruvchilar qoida qabul qilinishidan oldin variantlarni, masalan kunlik yoki haftalik hisobotni, solishtira oladi.</p></div></div>
+        </div>
+        
+        <div class="lang-en">
+            <h3>How Regulometer works</h3>
+            <div class="steps">
+                <div class="step"><b>Read the rule</b><span>Find what the law actually makes people do: file, record, report, register.</span></div>
+                <div class="step"><b>List the tasks</b><span>Break it into information obligations, each one a separate piece of work.</span></div>
+                <div class="step"><b>Put numbers on them</b><span>Estimate time, hourly cost, how often, and how many businesses are affected.</span></div>
+                <div class="step"><b>Test the options</b><span>Change the assumptions and see what a lighter version of the rule would save.</span></div>
+            </div>
+        </div>
+        <div class="lang-uz">
+            <h3>Regulometer qanday ishlaydi</h3>
+            <div class="steps">
+                <div class="step"><b>Qoidani o'qish</b><span>Qonun odamlardan aslida nimani talab qilishini aniqlang: topshirish, qayd etish, hisobot berish, ro'yxatdan o'tish.</span></div>
+                <div class="step"><b>Vazifalarni sanash</b><span>Uni axborot majburiyatlariga ajrating, har biri alohida ish.</span></div>
+                <div class="step"><b>Raqam qo'yish</b><span>Vaqt, soatbay xarajat, takrorlanish va qamrab olingan korxonalar sonini baholang.</span></div>
+                <div class="step"><b>Variantlarni sinash</b><span>Taxminlarni o'zgartirib, qoidaning yengilroq varianti qancha tejashini ko'ring.</span></div>
+            </div>
+        </div>
+        <div class="lang-en case-label"><small>Case study</small><b>E-aktiv: one rule, measured end to end</b></div>
+        <div class="lang-uz case-label"><small>Misol</small><b>E-aktiv: bitta qoida, boshidan oxirigacha o'lchandi</b></div>
+
+        
+        <!-- English Content -->
+        <div class="lang-en">
+            <h2>Understanding the Act & Formula</h2>
+            <p><strong>Uzbekistan's Cabinet of Ministers Resolution No. 595</strong> (adopted December 22, 2021, in force from January 1, 2022) requires VAT payers, and companies with more than 50% state ownership, to record their fixed assets, intangible assets and inventory in the tax authority's electronic system, <strong>E-aktiv</strong>. Its main goal is tax transparency: tax officials can follow how assets and stock move and spot sham transactions. What this costs businesses in staff time, especially smaller ones without automated systems, is the question this page tries to answer.</p>
+
+            <h3>The rule in brief</h3>
+            <ul>
+                <li><strong>Recording assets and stock.</strong> Buying or building, putting into use, revaluing and disposing of fixed assets, intangible assets and inventory must be entered in E-aktiv (my.soliq.uz), as must changes to authorized capital.</li>
+                <li><strong>Write-offs within 3 business days.</strong> If inventory is lost through spoilage, shortage or damage, it must be recorded in E-aktiv within 3 business days.</li>
+                <li><strong>Leases in E-Ijara.</strong> Lease agreements must be registered in a separate system, E-Ijara. Stock kept at premises with an unregistered lease is treated, for tax purposes, as not existing.</li>
+                <li><strong>17-digit product codes.</strong> From December 22, 2022, electronic invoices need a 17-digit product or service code from the national product catalog.</li>
+            </ul>
+            <div class="didyou"><strong>Law vs. estimate.</strong> The dates, the groups covered and the duties above come from law-firm summaries of the resolution, not from the official text, so check lex.uz before relying on them. The time per task (1 hour a day, 3 hours a month), the hourly rate and the 100,000 businesses are our own assumptions. Change them in the simulator to test other cases.</div>
+            
+            <p>To measure this friction, we use the <strong>Standard Cost Model (SCM)</strong>. The SCM calculates the administrative burden of a regulation using a strict macroeconomic formula:</p>
+            
+            <div class="highlight-box">
+                <strong style="font-size: 1.1rem;">Compliance Cost = Price × Quantity</strong><br><br>
+                • <strong>Price:</strong> Time spent per action (Hours) × Tariff (Hourly wage of the employee + overhead).<br>
+                • <strong>Quantity:</strong> Population (Number of affected businesses) × Frequency (Actions per year).
+            </div>
+
+            <h3>1. Variables for Uzbekistan (Estimates)</h3>
+            <p style="color: var(--text-muted);">To calculate the burden of Resolution No. 595, we establish baseline economic metrics for Small and Medium Enterprises (SMEs):</p>
+            <ul>
+                <li><strong>Target Population (N):</strong> ~100,000 businesses (VAT-registered enterprises).</li>
+                <li><strong>Tariff (W):</strong> 40,000 UZS per hour (Based on an avg. accountant salary plus 25% overhead).</li>
+                <li><strong>Working Days:</strong> 250 days per year.</li>
+            </ul>
+
+            <h3>2. Information Obligations (IOs)</h3>
+            <ul>
+                <li><strong>IO 1: Daily Digital Logging.</strong> Entering inventory codes into the E-aktiv interface.</li>
+                <li><strong>IO 2: Monthly Reconciliation.</strong> Auditing physical warehouse balances against the digital ledger.</li>
+                <li><strong>IO 3: Initial System Setup.</strong> Integrating E-aktiv with 1C and training staff.</li>
+            </ul>
+
+            <h3>3. Compliance Cost Matrix</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Obligation (IO)</th>
+                        <th>Time</th>
+                        <th>Frequency</th>
+                        <th>Cost per SME</th>
+                        <th>Macroeconomic Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>IO 1:</strong> Daily Logging</td>
+                        <td>1.0 hr</td>
+                        <td>250/yr</td>
+                        <td>10,000,000 UZS</td>
+                        <td>1,000,000,000,000 UZS</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IO 2:</strong> Monthly Recon</td>
+                        <td>3.0 hrs</td>
+                        <td>12/yr</td>
+                        <td>1,440,000 UZS</td>
+                        <td>144,000,000,000 UZS</td>
+                    </tr>
+                    <tr style="background-color: var(--primary-light); font-weight: 700; color: var(--primary);">
+                        <td>Annual Burden</td>
+                        <td></td>
+                        <td></td>
+                        <td>11,440,000 UZS</td>
+                        <td>1,144,000,000,000 UZS</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>4. Conclusion: The Urgent Need for Regulatory Impact Assessment</h3>
+            <div class="pull">We cannot manage what we do not measure.</div>
+            <p>The mandatory E-aktiv system was introduced with good intentions—to increase tax transparency and combat the shadow economy. However, as our Standard Cost Model analysis reveals, the implementation mechanism carries a massive, unmeasured economic consequence.</p>
+            <p>Under our assumptions about daily data entry, this single regulation creates <strong>286 hours of new administrative burden per business, per year</strong>. Across the estimated 100,000 affected enterprises, this translates to an annual macroeconomic deadweight loss of <strong>1.144 Trillion UZS (approximately $90 Million USD)</strong>. This is capital and human labor diverted directly from business growth into regulatory paperwork.</p>
+            <p>This case study exposes a critical gap in Uzbekistan’s current legislative process: laws are drafted without empirical cost-benefit analysis. We cannot manage what we do not measure. This is exactly why the <strong>Regulometer</strong> is necessary. By adopting international frameworks for compliance cost measurement and building digital civic-tech tools to calculate these burdens automatically, we can help policymakers design smarter, more efficient regulations that protect the economy while achieving government goals.</p>
+        </div>
+
+        <!-- Uzbek Content -->
+        <div class="lang-uz">
+            <h2>Qonun Hujjati va Formula</h2>
+            <p><strong>O'zbekiston Respublikasi Vazirlar Mahkamasining 595-son qarori</strong> (2021-yil 22-dekabrda qabul qilingan, 2022-yil 1-yanvardan kuchga kirgan) QQS to'lovchilarini va davlat ulushi 50 foizdan ortiq bo'lgan yuridik shaxslarni asosiy vositalari, nomoddiy aktivlari va tovar-moddiy zaxiralarini soliq organlarining elektron tizimi — <strong>E-aktiv</strong>da qayd etishga majbur qiladi. Asosiy maqsadi soliq shaffofligi: soliq xodimlari aktivlar va zaxiralar harakatini kuzatib, soxta operatsiyalarni aniqlay oladi. Bu biznesga, ayniqsa avtomatlashtirilgan tizimi yo'q kichik kompaniyalarga, qancha ish vaqti sarflatishi — ushbu sahifa javob izlayotgan savol.</p>
+
+            <h3>Qoida qisqacha</h3>
+            <ul>
+                <li><strong>Aktivlar va zaxiralarni qayd etish.</strong> Asosiy vositalar, nomoddiy aktivlar va zaxiralarni sotib olish yoki qurish, foydalanishga topshirish, qayta baholash va hisobdan chiqarish hamda ustav kapitali o'zgarishlari E-aktiv (my.soliq.uz)ga kiritiladi.</li>
+                <li><strong>Hisobdan chiqarish — 3 ish kuni ichida.</strong> Zaxira buzilish, kamomad yoki shikastlanish tufayli yo'qolsa, bu 3 ish kuni ichida E-aktivda aks ettiriladi.</li>
+                <li><strong>Ijara — E-Ijara tizimida.</strong> Ijara shartnomalari alohida E-Ijara tizimida ro'yxatdan o'tkaziladi. Ro'yxatdan o'tmagan ijara joyidagi zaxiralar soliq maqsadlarida mavjud emas deb baholanadi.</li>
+                <li><strong>17 xonali mahsulot kodi.</strong> 2022-yil 22-dekabrdan elektron hisob-fakturada milliy mahsulot katalogidagi 17 xonali mahsulot yoki xizmat kodi bo'lishi shart.</li>
+            </ul>
+            <div class="didyou"><strong>Qonun va taxmin.</strong> Sanalar, qamrab olingan guruhlar va yuqoridagi majburiyatlar qarorning rasmiy matnidan emas, yuridik firmalar sharhlaridan olingan, shuning uchun foydalanishdan oldin lex.uz'da tekshiring. Har bir vazifaga ketadigan vaqt (kuniga 1 soat, oyiga 3 soat), soatbay tarif va 100 000 ta korxona — bizning taxminlarimiz. Boshqa holatlarni sinash uchun ularni simulyatorda o'zgartiring.</div>
+            
+            <p>Ushbu qiyinchilikni o'lchash uchun biz <strong>Standart Xarajatlar Modelidan (SCM)</strong> foydalanamiz:</p>
+            
+            <div class="highlight-box">
+                <strong style="font-size: 1.1rem;">Muvofiqlik Xarajati = Narx × Miqdor</strong><br><br>
+                • <strong>Narx:</strong> Vaqt (Soat) × Tarif (Xodimning ish haqi + qo'shimcha xarajatlar).<br>
+                • <strong>Miqdor:</strong> Aholi (Korxonalar soni) × Chastota (Yiliga harakatlar).
+            </div>
+
+            <h3>1. O'zbekiston uchun o'zgaruvchilar</h3>
+            <ul>
+                <li><strong>Maqsadli Aholi (N):</strong> ~100 000 ta korxona (QQS to'lovchilari).</li>
+                <li><strong>Tarif (W):</strong> soatiga 40 000 so'm (O'rtacha buxgalter maoshi + xarajatlar).</li>
+                <li><strong>Ish kunlari:</strong> Yiliga 250 kun.</li>
+            </ul>
+
+            <h3>2. Axborot Majburiyatlari (IO)</h3>
+            <ul>
+                <li><strong>IO 1: Kunlik kiritish.</strong> Tovarlar harakatini E-aktivga kiritish.</li>
+                <li><strong>IO 2: Oylik taqqoslash.</strong> Ombor qoldiqlarini E-aktiv bilan taqqoslash.</li>
+                <li><strong>IO 3: Dastlabki sozlash.</strong> 1C bilan integratsiya qilish.</li>
+            </ul>
+
+            <h3>3. Xarajatlar Matritsasi</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Majburiyat (IO)</th>
+                        <th>Vaqt</th>
+                        <th>Chastota</th>
+                        <th>KOB xarajati</th>
+                        <th>Makroiqtisodiy Xarajat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>IO 1:</strong> Kunlik kiritish</td>
+                        <td>1.0 soat</td>
+                        <td>250/yil</td>
+                        <td>10,000,000 so'm</td>
+                        <td>1,000,000,000,000 so'm</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IO 2:</strong> Oylik taqqoslash</td>
+                        <td>3.0 soat</td>
+                        <td>12/yil</td>
+                        <td>1,440,000 so'm</td>
+                        <td>144,000,000,000 so'm</td>
+                    </tr>
+                    <tr style="background-color: var(--primary-light); font-weight: 700; color: var(--primary);">
+                        <td>Yillik Yuk</td>
+                        <td></td>
+                        <td></td>
+                        <td>11,440,000 so'm</td>
+                        <td>1,144,000,000,000 so'm</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>4. Xulosa: Tartibga solish ta'sirini baholashga bo'lgan jiddiy ehtiyoj</h3>
+            <div class="pull">Biz o'lchay olmaydigan narsani boshqara olmaymiz.</div>
+            <p>Majburiy E-aktiv tizimi yaxshi niyatlar bilan — soliq shaffofligini oshirish va xufiyona iqtisodiyotga qarshi kurashish maqsadida joriy etilgan. Biroq, bizning Standart Xarajatlar Modeli tahlilimiz shuni ko'rsatadiki, amalga oshirish mexanizmi ulkan, o'lchanmagan iqtisodiy oqibatlarni keltirib chiqaradi.</p>
+            <p>Kunlik ma'lumot kiritish haqidagi taxminlarimizga ko'ra, ushbu yagona qoida <strong>har bir biznes uchun yiliga 286 soatlik yangi ma'muriy yuk</strong> yaratadi. Taxmin qilingan 100 000 ta qamrab olingan korxona miqyosida bu yillik makroiqtisodiy yo'qotishni <strong>1,144 Trillion so'mni (taxminan 90 million AQSh dollari)</strong> tashkil etadi. Bu biznesni rivojlantirishdan to'g'ridan-to'g'ri me'yoriy qog'ozbozlikka yo'naltirilgan kapital va inson mehnatidir.</p>
+            <p>Ushbu amaliy tadqiqot O'zbekistonning joriy qonun ijodkorligi jarayonidagi muhim bo'shliqni ochib beradi: qonunlar empirik xarajat-foyda tahlilisiz ishlab chiqilmoqda. Biz o'lchay olmaydigan narsani boshqara olmaymiz. Aynan shuning uchun ham <strong>Regulometer</strong> juda muhimdir. Muvofiqlik xarajatlarini o'lchash kabi xalqaro tizimlarni qabul qilish va bu yuklarni avtomatik ravishda hisoblaydigan raqamli "civic-tech" vositalarini yaratish orqali biz siyosatchilarga davlat maqsadlariga erishish bilan birga iqtisodiyotni himoya qiladigan aqlliroq va samaraliroq qoidalar ishlab chiqishda yordam bera olamiz.</p>
+        </div>
+
+        <div class="calculator-wrapper">
+            <span class="calculator-badge">SIMULATOR</span>
+            <h2 id="ui-calc-title" style="margin-top: 10px; font-size: 1.4rem; border-bottom: none;">Policy Simulation Engine</h2>
+            <p id="ui-calc-desc" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px;">
+                Drag the sliders to simulate how changing reporting frequencies or exempting businesses impacts the national economy.
+            </p>
+
+            <div class="control-group">
+                <div class="control-header">
+                    <span id="ui-tariff">Hourly Tariff (UZS)</span>
+                    <span id="val-tariff">40,000</span>
+                </div>
+                <input type="range" id="in-tariff" min="10000" max="100000" step="5000" value="40000" oninput="calculate()">
+            </div>
+
+            <div class="control-group">
+                <div class="control-header">
+                    <span id="ui-businesses">Affected Businesses</span>
+                    <span id="val-businesses">100,000</span>
+                </div>
+                <input type="range" id="in-businesses" min="10000" max="300000" step="10000" value="100000" oninput="calculate()">
+            </div>
+
+            <div class="control-group">
+                <div class="control-header">
+                    <span id="ui-daily">Daily Logging (Hours/Day)</span>
+                    <span id="val-daily">1.0</span>
+                </div>
+                <input type="range" id="in-daily" min="0.1" max="4.0" step="0.1" value="1.0" oninput="calculate()">
+            </div>
+
+            <div class="control-group">
+                <div class="control-header">
+                    <span id="ui-monthly">Monthly Reconciliation (Hours/Month)</span>
+                    <span id="val-monthly">3.0</span>
+                </div>
+                <input type="range" id="in-monthly" min="0.5" max="10.0" step="0.5" value="3.0" oninput="calculate()">
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-title" id="ui-cost-sme">Annual Cost per SME</div>
+                    <div class="metric-value-uzs" id="out-sme-uzs">0 UZS</div>
+                    <div class="metric-value-usd" id="out-sme-usd">$0</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title" id="ui-cost-macro">Total Macroeconomic Cost</div>
+                    <div class="metric-value-uzs" id="out-macro-uzs">0 UZS</div>
+                    <div class="metric-value-usd" id="out-macro-usd">$0</div>
+                </div>
+            </div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-muted); text-align: right; margin-top: 20px;" id="ui-exchange">
+                * Exchange rate: 1 USD = 12,700 UZS
+            </div>
+        </div>
+        <div class="lang-en">
+            <h2 style="margin-top:56px">Policy options compared</h2>
+            <p>The simulator lets you test any combination. Here are five scenarios, all at 40,000 UZS per hour. They are illustrations of the model, not proposals or forecasts.</p>
+            <div class="table-wrap"><table>
+                <thead><tr><th>Scenario</th><th class="num">Hours / SME / yr</th><th class="num">Cost per SME (UZS)</th><th class="num">Total (UZS bn)</th><th class="num">Total (USD m)</th></tr></thead>
+                <tbody>
+                    <tr class="base"><td>Baseline: 1 h daily + 3 h monthly, 100,000 firms</td><td class="num">286</td><td class="num">11,440,000</td><td class="num">1,144</td><td class="num">90.1</td></tr>
+                    <tr><td>Half the firms exempt (50,000 covered)</td><td class="num">286</td><td class="num">11,440,000</td><td class="num">572</td><td class="num">45.0</td></tr>
+                    <tr><td>Automated daily entry (15 min a day)</td><td class="num">98.5</td><td class="num">3,940,000</td><td class="num">394</td><td class="num">31.0</td></tr>
+                    <tr><td>Weekly instead of daily entry (1 h a week)</td><td class="num">88</td><td class="num">3,520,000</td><td class="num">352</td><td class="num">27.7</td></tr>
+                    <tr><td>Monthly reconciliation only</td><td class="num">36</td><td class="num">1,440,000</td><td class="num">144</td><td class="num">11.3</td></tr>
+                </tbody>
+            </table></div>
+            <p class="note">USD at 12,700 UZS per dollar. Weekly entry is counted as 52 sessions a year.</p>
+
+            <h3>What this model does not tell you</h3>
+            <div class="two">
+                <div class="card red"><h4>It counts costs only</h4><p>A rule like E-aktiv may bring benefits too: more tax collected, fewer sham deals, a better view of the economy. Those are not measured here. A full impact assessment weighs both sides.</p></div>
+                <div class="card"><h4>It uses assumptions, not surveys</h4><p>Time per task, wages and the number of firms are our estimates. Real timing studies with accountants would make the numbers stronger. The simulator is built so that anyone can swap in better data.</p></div>
+                <div class="card"><h4>It treats all firms alike</h4><p>A shop with 20 stock lines and a distributor with 20,000 do not spend the same time. A later version could split firms by size and sector.</p></div>
+                <div class="card"><h4>It leaves out one-off costs</h4><p>IO 3, setting up E-aktiv with 1C and training staff, is listed but not priced in the totals. Adding it would raise the first-year cost.</p></div>
+            </div>
+
+            <h3>Key terms</h3>
+            <dl class="glossary">
+                <div><dt>Standard Cost Model (SCM)</dt><dd>A method that prices paperwork: time × hourly cost × how often × how many firms.</dd></div>
+                <div><dt>Information obligation (IO)</dt><dd>Any duty to collect, record, file or report information because a law says so.</dd></div>
+                <div><dt>Regulatory impact assessment (RIA)</dt><dd>A structured check of the likely effects of a proposed rule, and of the alternatives, before it is adopted.</dd></div>
+                <div><dt>Tariff</dt><dd>The cost of one hour of staff time: wage plus overhead such as office space and equipment.</dd></div>
+                <div><dt>SME</dt><dd>Small or medium-sized enterprise, the group that usually has the least automation and feels paperwork most.</dd></div>
+                <div><dt>Deadweight loss</dt><dd>Value lost to the economy without anyone gaining it. Here, time spent on paperwork that could have gone to productive work.</dd></div>
+            </dl>
+
+            <h3>Questions people ask</h3>
+            <details><summary>Is the 1.144 trillion UZS a real, measured number?</summary><p>No. It is the result of a model. If the assumptions are right, the cost is about that size. Move the sliders to see how fast it changes, and treat the result as an order of magnitude.</p></details>
+            <details><summary>Is Regulometer saying E-aktiv is a bad law?</summary><p>No. The goal of tax transparency is legitimate. Regulometer only asks a narrower question: what does the way the rule is carried out cost the people who follow it, and could the same goal be reached more cheaply?</p></details>
+            <details><summary>Why use 40,000 UZS per hour?</summary><p>It is based on an average accountant's salary plus 25% overhead. It is an estimate. If you have better wage data for your sector, change the tariff slider.</p></details>
+            <details><summary>Where do the legal details come from?</summary><p>From law-firm summaries of Resolution No. 595, not from the official text. Always check lex.uz for the exact wording before relying on a date or duty.</p></details>
+            <details><summary>Can the method be used for other laws?</summary><p>Yes. Any rule that creates recurring paperwork can be broken into obligations and priced the same way. E-aktiv is simply the first example.</p></details>
+        </div>
+        <div class="lang-uz">
+            <h2 style="margin-top:56px">Siyosat variantlarini solishtirish</h2>
+            <p>Simulyator istalgan kombinatsiyani sinash imkonini beradi. Quyida soatiga 40 000 so'mlik tarifda beshta stsenariy. Ular modelning misollari, taklif yoki prognoz emas.</p>
+            <div class="table-wrap"><table>
+                <thead><tr><th>Stsenariy</th><th class="num">Soat / KOB / yil</th><th class="num">KOB xarajati (so'm)</th><th class="num">Jami (mlrd so'm)</th><th class="num">Jami (mln USD)</th></tr></thead>
+                <tbody>
+                    <tr class="base"><td>Asosiy: kuniga 1 soat + oyiga 3 soat, 100 000 korxona</td><td class="num">286</td><td class="num">11 440 000</td><td class="num">1 144</td><td class="num">90,1</td></tr>
+                    <tr><td>Korxonalarning yarmi ozod (50 000 ta qamrab olingan)</td><td class="num">286</td><td class="num">11 440 000</td><td class="num">572</td><td class="num">45,0</td></tr>
+                    <tr><td>Avtomatlashtirilgan kunlik kiritish (kuniga 15 daqiqa)</td><td class="num">98,5</td><td class="num">3 940 000</td><td class="num">394</td><td class="num">31,0</td></tr>
+                    <tr><td>Kunlik o'rniga haftalik kiritish (haftasiga 1 soat)</td><td class="num">88</td><td class="num">3 520 000</td><td class="num">352</td><td class="num">27,7</td></tr>
+                    <tr><td>Faqat oylik taqqoslash</td><td class="num">36</td><td class="num">1 440 000</td><td class="num">144</td><td class="num">11,3</td></tr>
+                </tbody>
+            </table></div>
+            <p class="note">USD 1 dollar = 12 700 so'm kursida. Haftalik kiritish yiliga 52 marta deb hisoblangan.</p>
+
+            <h3>Bu model nimani ko'rsatmaydi</h3>
+            <div class="two">
+                <div class="card red"><h4>Faqat xarajatni sanaydi</h4><p>E-aktiv kabi qoida foyda ham keltirishi mumkin: ko'proq soliq yig'ilishi, soxta bitimlarning kamayishi, iqtisodiyotga aniqroq nazar. Ular bu yerda o'lchanmagan. To'liq ta'sir baholash ikkala tomonni tortadi.</p></div>
+                <div class="card"><h4>So'rovlar emas, taxminlarga tayanadi</h4><p>Vazifaga ketadigan vaqt, ish haqi va korxonalar soni bizning baholarimiz. Buxgalterlar bilan o'tkaziladigan haqiqiy vaqt o'lchovlari raqamlarni kuchaytirardi. Simulyator har kim yaxshiroq ma'lumotni qo'ya olishi uchun qurilgan.</p></div>
+                <div class="card"><h4>Barcha korxonalarni bir xil deb oladi</h4><p>20 turdagi tovari bor do'kon va 20 000 turdagi tovari bor distribyutor bir xil vaqt sarflamaydi. Keyingi versiya korxonalarni hajmi va sohasi bo'yicha ajratishi mumkin.</p></div>
+                <div class="card"><h4>Bir martalik xarajatlar kiritilmagan</h4><p>IO 3, ya'ni E-aktivni 1C bilan ulash va xodimlarni o'qitish, ro'yxatda bor, lekin jamiga qo'shilmagan. Uni qo'shish birinchi yil xarajatini oshirardi.</p></div>
+            </div>
+
+            <h3>Asosiy atamalar</h3>
+            <dl class="glossary">
+                <div><dt>Standart Xarajatlar Modeli (SCM)</dt><dd>Qog'ozbozlikka narx qo'yadigan usul: vaqt × soatbay xarajat × takrorlanish × korxonalar soni.</dd></div>
+                <div><dt>Axborot majburiyati (IO)</dt><dd>Qonun talab qilgani uchun ma'lumot to'plash, qayd etish, topshirish yoki hisobot berish majburiyati.</dd></div>
+                <div><dt>Tartibga solish ta'sirini baholash (RIA)</dt><dd>Taklif qilingan qoidaning ehtimoliy ta'siri va muqobillarini qabul qilinishidan oldin tuzilgan tarzda tekshirish.</dd></div>
+                <div><dt>Tarif</dt><dd>Xodimning bir soatlik vaqti narxi: ish haqi va ofis, jihoz kabi qo'shimcha xarajatlar.</dd></div>
+                <div><dt>KOB</dt><dd>Kichik va o'rta biznes. Odatda avtomatlashtirish eng kam bo'lgan va qog'ozbozlikni eng ko'p sezadigan guruh.</dd></div>
+                <div><dt>Deadweight loss (befoyda yo'qotish)</dt><dd>Hech kim foyda ko'rmagan holda iqtisodiyot yo'qotgan qiymat. Bu yerda samarali ishga sarflanishi mumkin bo'lgan, lekin qog'ozbozlikka ketgan vaqt.</dd></div>
+            </dl>
+
+            <h3>Ko'p beriladigan savollar</h3>
+            <details><summary>1,144 trillion so'm haqiqiy, o'lchangan raqammi?</summary><p>Yo'q. Bu modelning natijasi. Taxminlar to'g'ri bo'lsa, xarajat taxminan shu hajmda bo'ladi. Slayderlarni siljitib, u qanchalik tez o'zgarishini ko'ring va natijani tartib darajasi sifatida qabul qiling.</p></details>
+            <details><summary>Regulometer E-aktiv yomon qonun demoqchimi?</summary><p>Yo'q. Soliq shaffofligi maqsadi qonuniy. Regulometer faqat torroq savol beradi: qoidaning amalga oshirilish usuli unga amal qiluvchilarga qancha turadi va xuddi shu maqsadga arzonroq yo'l bilan erishish mumkinmi?</p></details>
+            <details><summary>Nega soatiga 40 000 so'm olingan?</summary><p>O'rtacha buxgalter maoshi va 25% qo'shimcha xarajatga asoslangan. Bu taxmin. Sohangiz bo'yicha yaxshiroq ish haqi ma'lumoti bo'lsa, tarif slayderini o'zgartiring.</p></details>
+            <details><summary>Huquqiy tafsilotlar qayerdan olingan?</summary><p>595-son qarorning rasmiy matnidan emas, yuridik firmalar sharhlaridan. Sana yoki majburiyatga tayanishdan oldin aniq matnni lex.uz'da tekshiring.</p></details>
+            <details><summary>Usulni boshqa qonunlar uchun ishlatish mumkinmi?</summary><p>Ha. Takrorlanuvchi qog'ozbozlik yaratadigan har qanday qoidani majburiyatlarga ajratib, xuddi shunday baholash mumkin. E-aktiv shunchaki birinchi misol.</p></details>
+        </div>
+
+        <div class="lang-en">
+            <h2 style="margin-top:56px">Fun with the numbers</h2>
+            <p>All figures come from the model above, so they are estimates, not measurements.</p>
+            <div class="facts"><div class="fact"><b>7+ weeks</b><span>of working time per business, every year, for one rule (286 hours).</span></div><div class="fact"><b>14,300</b><span>full-time jobs' worth of hours (28.6 million hours across all firms).</span></div><div class="fact"><b>87%</b><span>of the cost comes from one task: daily logging.</span></div><div class="fact"><b>-69%</b><span>cost if daily entry became weekly, in this model.</span></div></div>
+            <div class="bar"><i style="width:87%;background:var(--navy)">87%</i><i style="width:13%;background:var(--primary)">13%</i></div>
+            <p class="legend">Dark: daily logging (87%). Red: monthly reconciliation (13%).</p>
+            <div class="didyou"><strong>Fun fact.</strong> In this model, every extra minute of daily logging costs about 16.7 billion UZS a year (roughly $1.3 million) across all 100,000 businesses. Small time savings add up fast.</div>
+        </div>
+        <div class="lang-uz">
+            <h2 style="margin-top:56px">Raqamlar bilan qiziqarli faktlar</h2>
+            <p>Barcha raqamlar yuqoridagi modeldan olingan, ya'ni ular o'lchov emas, taxmin.</p>
+            <div class="facts"><div class="fact"><b>7+ hafta</b><span>har bir biznes uchun har yili bitta qoidaga ketadigan ish vaqti (286 soat).</span></div><div class="fact"><b>14 300</b><span>to'liq stavkali xodimning yillik ish soatlariga teng (barcha korxonalar bo'yicha 28,6 million soat).</span></div><div class="fact"><b>87%</b><span>xarajat bitta vazifadan: kunlik kiritishdan.</span></div><div class="fact"><b>-69%</b><span>kunlik kiritish haftalikka o'tsa, xarajat (shu model bo'yicha).</span></div></div>
+            <div class="bar"><i style="width:87%;background:var(--navy)">87%</i><i style="width:13%;background:var(--primary)">13%</i></div>
+            <p class="legend">To'q rang: kunlik kiritish (87%). Qizil: oylik taqqoslash (13%).</p>
+            <div class="didyou"><strong>Qiziq fakt.</strong> Ushbu modelda kunlik kiritishga ketadigan har bir qo'shimcha daqiqa barcha 100 000 ta korxona bo'yicha yiliga taxminan 16,7 milliard so'm (taxminan 1,3 million dollar) turadi. Kichik vaqt tejamkorligi tez yig'iladi.</div>
+        </div>
+    </div>
+
+    <!-- TAB: RESEARCH -->
+    <div id="pane-research" class="tab-pane">
+        <div class="lang-en">
+            <h2>Research: what the evidence says about measuring rules</h2>
+            <p class="lead">Regulometer rests on one idea: a rule should have a known cost before it is adopted, and again after it has been in force. To check whether that idea fits what experts advise, we read the OECD's Public Governance Review of Uzbekistan and related material.</p>
+            <div class="badge-row"><span class="badge">8 sources</span><span class="badge">OECD, ADB and press reports</span><span class="badge warn">Summary-level reading</span></div>
+            <div class="didyou"><strong>Reading note.</strong> The OECD chapter page loaded only its summary, not the full text. The findings below come from the report summary, other OECD publications on Uzbekistan and news reports. Check the full chapter before relying on any detail.</div>
+
+            <h3>Background: what is a regulatory impact assessment?</h3>
+            <p>A regulatory impact assessment (RIA) is a structured look at a proposed rule before it becomes law. It asks what problem the rule solves, what options exist, who pays, who benefits and how the result will be checked. The OECD's 2012 Recommendation on Regulatory Policy and Governance calls for RIA to be built into the early stages of the policy process. <span class="ref">[6]</span></p>
+            <p>The Standard Cost Model that Regulometer uses covers one part of that picture: the administrative cost to businesses of providing information to the state. It is narrow on purpose, which makes it fast, repeatable and easy to explain.</p>
+
+            <h3>Timeline: the reform path</h3>
+            <ul class="timeline">
+                <li><small>Since 2017</small><b>Regulatory quality improves</b><span>The OECD review reports improvements in regulatory quality and the rule of law over this period. <span class="ref">[2]</span></span></li>
+                <li><small>Aug 2018</small><b>Concept of improvement of normative activity</b><span>Presidential Decree No. UP-5505 of 8 August 2018 is cited in the legal literature as a starting point for introducing impact assessment in rule-making. <span class="ref">[7]</span></span></li>
+                <li><small>Sep 2020</small><b>Ministry of Justice coordinates RIA</b><span>A presidential resolution names the Ministry of Justice as the coordinating body for assessing the regulatory impact of legal acts and sets up an RIA department there. <span class="ref">[8]</span></span></li>
+                <li><small>Jan 2022</small><b>Resolution No. 595 takes effect</b><span>The E-aktiv rule, our case study, comes into force. It is a Cabinet-level act, not a law passed by parliament.</span></li>
+                <li><small>1 Oct 2024</small><b>Simplified and expanded RIA</b><span>A presidential decree introduces simplified and expanded RIA for draft legal acts, coordinated by the Ministry of Justice. <span class="ref">[4]</span><span class="ref">[5]</span></span></li>
+                <li><small>2024</small><b>OECD Public Governance Review</b><span>The review recommends strengthening evidence-informed law-making and data use. <span class="ref">[2]</span></span></li>
+                <li><small>Aug 2026</small><b>Regulometer begins</b><span>This project starts, with E-aktiv as its first case study.</span></li>
+            </ul>
+
+            <h3>What the sources say</h3>
+            <div class="cards">
+                <div class="card"><h4>Progress is real</h4><p>The review finds significant progress toward an evidence-informed law-making framework, with better regulatory quality and rule of law since 2017. <span class="ref">[2]</span></p></div>
+                <div class="card"><h4>Data is still a gap</h4><p>It suggests using data better in policymaking and making it easy for all civil servants to reach. <span class="ref">[2]</span></p></div>
+                <div class="card"><h4>RIA is being built</h4><p>OECD recommendations include an RIA system, and a decree now brings simplified and expanded RIA for draft acts from October 2024. <span class="ref">[4]</span><span class="ref">[5]</span></p></div>
+                <div class="card"><h4>More is recommended</h4><p>A later OECD and ADB roadmap asks for RIA practice in line with OECD principles and public consultation longer than the 15-day minimum. <span class="ref">[3]</span></p></div>
+                <div class="card"><h4>Fewer by-laws</h4><p>The same roadmap calls for less use of by-laws and decrees for matters that primary law should cover. <span class="ref">[3]</span></p></div>
+                <div class="card"><h4>Complexity costs money</h4><p>Complex, overlapping legislation can delay compliance and raise business costs, while e-government is lowering administrative costs for new and small firms. <span class="ref">[3]</span></p></div>
+            </div>
+
+            <h3>What this means for Regulometer</h3>
+            <p>These are our own readings of the sources, not statements by the OECD.</p>
+            <ol class="concl">
+                <li><b>Measurement rules are arriving.</b><span>With RIA being introduced, there is now a place for cost evidence, and a need for tools that can produce it quickly and clearly. <span class="ref">[2]</span><span class="ref">[4]</span></span></li>
+                <li><b>Cost numbers are the missing piece.</b><span>The sources talk mostly about frameworks and data. A simple, repeatable way to put hours and money on a rule is what a tool like Regulometer adds.</span></li>
+                <li><b>Digital does not mean cost-free.</b><span>E-government can lower costs, but a digital reporting duty like E-aktiv still takes staff time. Only measurement shows which way the balance tips. <span class="ref">[3]</span></span></li>
+                <li><b>Speed and by-laws matter.</b><span>Cabinet-level acts, the kind Resolution No. 595 is, are among those the roadmap says should only implement primary law. Where rules change often, fast cost estimates are valuable. <span class="ref">[3]</span></span></li>
+                <li><b>Open data builds trust.</b><span>The OECD asks for data that is easy to reach, so publishing our assumptions and numbers openly fits. <span class="ref">[2]</span></span></li>
+                <li><b>RIA is demanding, so stay modest.</b><span>OECD guidance says good impact assessment takes real resources and expertise. Regulometer should show its estimates and assumptions, and complement official assessments, not replace them. <span class="ref">[6]</span></span></li>
+            </ol>
+
+            <h3>Limits of this review</h3>
+            <ul>
+                <li>We read the report summary, not the full chapter, so detailed recommendations may be missing or simplified.</li>
+                <li>Three of the eight sources are news reports. They are useful for dates, but they are not official texts.</li>
+                <li>The OECD does not comment on Resolution No. 595 or E-aktiv in the material we read. Linking them is our own step.</li>
+                <li>Our next step is to read the full chapter and the decree texts themselves on lex.uz.</li>
+            </ul>
+            <h3>Sources</h3>
+        </div>
+        <div class="lang-uz">
+            <h2>Tadqiqot: dalillar qoidalarni o'lchash haqida nima deydi</h2>
+            <p class="lead">Regulometer bitta fikrga tayanadi: qoidaning narxi u qabul qilinishidan oldin ham, kuchga kirgandan keyin ham ma'lum bo'lishi kerak. Bu fikr mutaxassislar maslahatiga mos kelishini tekshirish uchun biz OECDning O'zbekiston bo'yicha Davlat boshqaruvi sharhini va tegishli materiallarni o'qidik.</p>
+            <div class="badge-row"><span class="badge">8 ta manba</span><span class="badge">OECD, ADB va matbuot xabarlari</span><span class="badge warn">Qisqacha mazmun darajasida o'qilgan</span></div>
+            <div class="didyou"><strong>O'qish bo'yicha eslatma.</strong> OECD bobi sahifasidan faqat qisqacha mazmuni yuklandi, to'liq matni emas. Quyidagi xulosalar hisobotning qisqacha mazmuni, O'zbekiston haqidagi boshqa OECD nashrlari va yangiliklardan olingan. Biror tafsilotga tayanishdan oldin to'liq bobni tekshiring.</div>
+
+            <h3>Fon: tartibga solish ta'sirini baholash nima?</h3>
+            <p>Tartibga solish ta'sirini baholash (RIA) taklif qilingan qoida qonunga aylanishidan oldin uni tuzilgan tarzda ko'rib chiqishdir. U qoida qaysi muammoni hal qilishi, qanday variantlar borligi, kim to'lashi, kim foyda ko'rishi va natija qanday tekshirilishini so'raydi. OECDning 2012-yilgi Tartibga solish siyosati va boshqaruvi bo'yicha tavsiyasi RIAni siyosat jarayonining dastlabki bosqichlariga kiritishga chaqiradi. <span class="ref">[6]</span></p>
+            <p>Regulometer ishlatadigan Standart Xarajatlar Modeli bu rasmning bir qismini qamrab oladi: biznesning davlatga ma'lumot berishdagi ma'muriy xarajati. U ataylab tor, shuning uchun tez, takrorlanuvchi va tushuntirish oson.</p>
+
+            <h3>Xronologiya: islohot yo'li</h3>
+            <ul class="timeline">
+                <li><small>2017-yildan</small><b>Tartibga solish sifati yaxshilanadi</b><span>OECD sharhi shu davrda tartibga solish sifati va qonun ustuvorligi yaxshilanganini qayd etadi. <span class="ref">[2]</span></span></li>
+                <li><small>2018-yil avgust</small><b>Normativ faoliyatni takomillashtirish konsepsiyasi</b><span>2018-yil 8-avgustdagi PF-5505-son Prezident farmoni huquqiy adabiyotda qonun ijodkorligida ta'sirni baholashni joriy etishning boshlang'ich nuqtasi sifatida keltiriladi. <span class="ref">[7]</span></span></li>
+                <li><small>2020-yil sentyabr</small><b>Adliya vazirligi RIAni muvofiqlashtiradi</b><span>Prezident qarori huquqiy hujjatlarning tartibga solish ta'sirini baholashni muvofiqlashtiruvchi organ sifatida Adliya vazirligini belgilaydi va unda RIA bo'limini tashkil etadi. <span class="ref">[8]</span></span></li>
+                <li><small>2022-yil yanvar</small><b>595-son qaror kuchga kiradi</b><span>Bizning amaliy misolimiz bo'lgan E-aktiv qoidasi kuchga kiradi. Bu Vazirlar Mahkamasi darajasidagi hujjat, parlament qabul qilgan qonun emas.</span></li>
+                <li><small>2024-yil 1-oktyabr</small><b>Soddalashtirilgan va kengaytirilgan RIA</b><span>Prezident farmoni huquqiy hujjat loyihalari uchun soddalashtirilgan va kengaytirilgan RIAni joriy etadi, uni Adliya vazirligi muvofiqlashtiradi. <span class="ref">[4]</span><span class="ref">[5]</span></span></li>
+                <li><small>2024-yil</small><b>OECD Davlat boshqaruvi sharhi</b><span>Sharh dalillarga asoslangan qonun ijodkorligi va ma'lumotlardan foydalanishni kuchaytirishni tavsiya etadi. <span class="ref">[2]</span></span></li>
+                <li><small>2026-yil avgust</small><b>Regulometer boshlandi</b><span>Loyiha E-aktivni birinchi amaliy misol qilib boshlandi.</span></li>
+            </ul>
+
+            <h3>Manbalar nima deydi</h3>
+            <div class="cards">
+                <div class="card"><h4>Yutuqlar real</h4><p>Sharh dalillarga asoslangan qonun ijodkorligi tizimi tomon sezilarli yutuqni, 2017-yildan beri tartibga solish sifati va qonun ustuvorligi yaxshilanganini ko'rsatadi. <span class="ref">[2]</span></p></div>
+                <div class="card"><h4>Ma'lumotlar hali ham bo'shliq</h4><p>Siyosat yuritishda ma'lumotlardan yaxshiroq foydalanish va ularni barcha davlat xodimlari uchun oson yetkazish tavsiya etiladi. <span class="ref">[2]</span></p></div>
+                <div class="card"><h4>RIA qurilmoqda</h4><p>OECD tavsiyalari orasida RIA tizimi bor, farmon esa 2024-yil oktyabridan loyihalar uchun soddalashtirilgan va kengaytirilgan RIAni joriy etdi. <span class="ref">[4]</span><span class="ref">[5]</span></p></div>
+                <div class="card"><h4>Yana tavsiyalar bor</h4><p>Keyingi OECD va ADB yo'l xaritasi RIA amaliyotini OECD tamoyillariga moslashni va jamoatchilik muhokamasini 15 kunlik minimumdan uzoqroq qilishni so'raydi. <span class="ref">[3]</span></p></div>
+                <div class="card"><h4>Qonunosti hujjatlari kamroq</h4><p>Shu yo'l xaritasi birlamchi qonun hal qilishi kerak bo'lgan masalalarda qonunosti hujjatlari va farmonlardan kamroq foydalanishni talab qiladi. <span class="ref">[3]</span></p></div>
+                <div class="card"><h4>Murakkablik pulga tushadi</h4><p>Murakkab va bir-birini takrorlaydigan qonunchilik rioya qilishni kechiktirib, biznes xarajatini oshirishi mumkin, elektron hukumat esa yangi va kichik korxonalar uchun ma'muriy xarajatni kamaytirmoqda. <span class="ref">[3]</span></p></div>
+            </div>
+
+            <h3>Bu Regulometer uchun nimani anglatadi</h3>
+            <p>Bu bizning o'z talqinimiz, OECDning bayonoti emas.</p>
+            <ol class="concl">
+                <li><b>Baholash qoidalari kelmoqda.</b><span>RIA joriy etilayotgani xarajat dalillari uchun joy ochadi, ularni tez va aniq ishlab chiqaradigan vositalar esa kerak bo'ladi. <span class="ref">[2]</span><span class="ref">[4]</span></span></li>
+                <li><b>Yetishmayotgan narsa: xarajat raqamlari.</b><span>Manbalar asosan tizim va ma'lumotlar haqida gapiradi. Qoidaga soat va pul bilan narx qo'yishning oddiy, takrorlanuvchi usuli esa Regulometer qo'shadigan narsa.</span></li>
+                <li><b>Raqamlilik bepul degani emas.</b><span>Elektron hukumat xarajatni kamaytirishi mumkin, lekin E-aktiv kabi raqamli hisobot majburiyati ham xodimlar vaqtini oladi. Tarozi qaysi tomonga og'ishini faqat o'lchov ko'rsatadi. <span class="ref">[3]</span></span></li>
+                <li><b>Tezlik va qonunosti hujjatlar muhim.</b><span>595-son qaror kabi Vazirlar Mahkamasi darajasidagi hujjatlar yo'l xaritasiga ko'ra faqat birlamchi qonunni amalga oshirishi kerak bo'lganlar qatoriga kiradi. Qoidalar tez-tez o'zgarganda tezkor xarajat baholari qimmatli. <span class="ref">[3]</span></span></li>
+                <li><b>Ochiqlik ishonch yaratadi.</b><span>OECD ma'lumotlar oson yetib borishini so'raydi, shuning uchun taxminlarimiz va raqamlarimizni ochiq e'lon qilish shunga mos. <span class="ref">[2]</span></span></li>
+                <li><b>RIA talabchan, shuning uchun kamtar bo'ling.</b><span>OECD yo'riqnomasiga ko'ra yaxshi ta'sir baholash katta resurs va tajriba talab qiladi. Regulometer baholar va taxminlarni ochiq ko'rsatishi hamda rasmiy baholarni almashtirmay, to'ldirishi kerak. <span class="ref">[6]</span></span></li>
+            </ol>
+
+            <h3>Ushbu sharhning cheklovlari</h3>
+            <ul>
+                <li>Biz to'liq bobni emas, hisobotning qisqacha mazmunini o'qidik, shuning uchun batafsil tavsiyalar tushib qolgan yoki soddalashtirilgan bo'lishi mumkin.</li>
+                <li>Sakkizta manbadan uchtasi yangiliklar. Ular sanalar uchun foydali, lekin rasmiy matn emas.</li>
+                <li>OECD biz o'qigan materiallarda 595-son qaror yoki E-aktiv haqida fikr bildirmaydi. Ularni bog'lash bizning o'z qadamimiz.</li>
+                <li>Keyingi qadamimiz: to'liq bobni va farmon matnlarini lex.uz'da o'qish.</li>
+            </ul>
+            <h3>Manbalar</h3>
+        </div>
+        <ol class="refs">
+<li>OECD (2024), "Evidence informed policymaking and regulatory quality in Uzbekistan", in <em>OECD Public Governance Reviews: Uzbekistan</em>, OECD Publishing, Paris. <a href="https://www.oecd.org/en/publications/oecd-public-governance-reviews-uzbekistan_2f36d8ec-en/full-report/component-10.html" target="_blank" rel="noopener">Link</a></li>
+<li>OECD (2024), <em>OECD Public Governance Reviews: Uzbekistan</em>, report summary page. <a href="https://www.oecd.org/en/publications/oecd-public-governance-reviews-uzbekistan_2f36d8ec-en.html" target="_blank" rel="noopener">Link</a></li>
+<li>OECD and ADB, <em>Roadmap for Sustainable Investment Policy Reforms in Uzbekistan</em>. <a href="https://www.oecd.org/en/publications/roadmap-for-sustainable-investment-policy-reforms-in-uzbekistan_20865f29-en.html" target="_blank" rel="noopener">Link</a></li>
+<li>UzDaily, "Uzbekistan to implement simplified and expanded regulatory impact assessment of draft normative legal acts". <a href="https://www.uzdaily.uz/en/uzbekistan-to-implement-simplified-and-expanded-regulatory-impact-assessment-of-draft-normative-legal-acts/" target="_blank" rel="noopener">Link</a></li>
+<li>UzDaily, "Shaping the Future of Governance in Uzbekistan with Key OECD Recommendations". <a href="https://www.uzdaily.uz/en/shaping-the-future-of-governance-in-uzbekistan-with-key-oecd-recommendations/" target="_blank" rel="noopener">Link</a></li>
+<li>OECD (2012), <em>Recommendation of the Council on Regulatory Policy and Governance</em>. <a href="https://legalinstruments.oecd.org/public/doc/273/26c0733a-b832-43c6-8d1a-1296171e4e4d.html" target="_blank" rel="noopener">Link</a></li>
+<li>Thematics Journal of Law, "Normative fixing of the assessment of regulatory impact in the Republic of Uzbekistan". Cites Presidential Decree No. UP-5505 of 8 August 2018. <a href="https://www.thematicsjournals.in/index.php/tjl/article/view/34" target="_blank" rel="noopener">Link</a></li>
+<li>UzDaily (25 September 2020), "A system for assessing the regulatory impact of legislative acts is being introduced in Uzbekistan". <a href="https://www.uzdaily.uz/en/a-system-for-assessing-the-regulatory-impact-of-legislative-acts-is-being-introduced-in-uzbekistan/" target="_blank" rel="noopener">Link</a></li>
+</ol>
+    </div>
+
+    <!-- TAB: ABOUT PROJECT & AUTHOR -->
+    <div id="pane-about" class="tab-pane">
+        <div class="lang-en">
+            <h2>About the Project</h2>
+            <p class="lead">Regulometer is a civic-tech initiative that puts a price tag on the paperwork laws create, so that rules can be debated with numbers and not only with intentions.</p>
+            <div class="badge-row"><span class="badge">Started August 2026</span><span class="badge">Uzbekistan</span><span class="badge">English / Uzbek</span></div>
+            <p>The project aims to independently measure the economic compliance cost of legal acts in Uzbekistan using the Standard Cost Model. By turning complex legal duties into transparent figures, Regulometer helps bridge the gap between policymakers and the businesses that follow their rules, and supports evidence-based lawmaking and Regulatory Impact Assessment (RIA).</p>
+
+            <h3>What we do</h3>
+            <div class="cards">
+                <div class="card"><h4>Measure</h4><p>Break a rule into its paperwork tasks and estimate the time and money each one takes.</p></div>
+                <div class="card"><h4>Simulate</h4><p>Let anyone change the assumptions and see what a lighter version of the rule would cost.</p></div>
+                <div class="card"><h4>Explain</h4><p>Show the method and the sources in plain language, in English and Uzbek.</p></div>
+            </div>
+
+            <h3>Our principles</h3>
+            <ul>
+                <li><strong>Assumptions in the open.</strong> Every number on the site is labeled as an estimate and can be changed.</li>
+                <li><strong>Costs and benefits both matter.</strong> We measure the cost side. We do not claim a rule is bad because it has a cost.</li>
+                <li><strong>Complement, not replace.</strong> Regulometer supports official impact assessments. It does not stand in for them.</li>
+                <li><strong>Correctable.</strong> If a figure or a legal detail is wrong, it should be fixed quickly and visibly.</li>
+            </ul>
+
+            <h3>Where it could go</h3>
+            <div class="roadmap">
+                <div class="card"><small>Now · since August 2026</small><h4>First case study</h4><p>The project started in August 2026. E-aktiv (Resolution No. 595) is measured end to end, with a working simulator.</p></div>
+                <div class="card"><small>Next</small><h4>Better data</h4><p>Replace assumptions with timing data from accountants and firms, and split results by company size.</p></div>
+                <div class="card"><small>Later</small><h4>More laws</h4><p>Apply the same template to other recurring reporting duties and publish the data openly.</p></div>
+            </div>
+
+            <div class="author-bio">
+                <div>
+                    <p style="font-size: 1.2rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">Bahodir Muzaffarov</p>
+                    <p style="color: var(--primary); font-weight: 600; font-size: 0.9rem; margin-bottom: 15px; text-transform: uppercase;">Legal Researcher & Civic-Tech Developer</p>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0;">Drawing on a strong STEM foundation from the Bukhara Presidential School and legal studies at Tashkent State University of Law (TSUL), Bahodir combines mathematical analysis with legal frameworks. He has worked as a legal intern at the Ministry of Justice of Uzbekistan, analyzing regulatory texts on the <em>lawyer.ijro.uz</em> platform. Currently studying as an exchange scholar at Pavol Jozef Šafárik University in Slovakia, he is actively exploring how modern digital tools can accurately measure and reduce administrative burdens for businesses.</p>
+                </div>
+            </div>
+
+            <div class="cta">
+                <h4>Spot a mistake or have better data?</h4>
+                <p>Corrections, timing data from your own accounting work and ideas for the next law to measure are welcome. Please send them to the author through regulometer.com.</p>
+            </div>
+        </div>
+
+        <div class="lang-uz">
+            <h2>Loyiha haqida</h2>
+            <p class="lead">Regulometer qonunlar yaratadigan qog'ozbozlikka narx qo'yadigan civic-tech tashabbusi, shunda qoidalar faqat niyat bilan emas, raqamlar bilan ham muhokama qilinadi.</p>
+            <div class="badge-row"><span class="badge">2026-yil avgustda boshlangan</span><span class="badge">O'zbekiston</span><span class="badge">Inglizcha / O'zbekcha</span></div>
+            <p>Loyiha O'zbekistonda qonun hujjatlarining iqtisodiy xarajatlarini Standart Xarajatlar Modeli yordamida mustaqil o'lchashni maqsad qiladi. Murakkab huquqiy majburiyatlarni shaffof raqamlarga aylantirib, Regulometer siyosatchilar va ularning qoidalariga amal qiluvchi biznes o'rtasidagi tafovutni kamaytirishga, dalillarga asoslangan qonun ijodkorligi va Tartibga solish ta'sirini baholash (RIA)ni qo'llab-quvvatlashga yordam beradi.</p>
+
+            <h3>Nima qilamiz</h3>
+            <div class="cards">
+                <div class="card"><h4>O'lchaymiz</h4><p>Qoidani qog'ozbozlik vazifalariga ajratib, har biriga ketadigan vaqt va pulni baholaymiz.</p></div>
+                <div class="card"><h4>Modellashtiramiz</h4><p>Har kim taxminlarni o'zgartirib, qoidaning yengilroq varianti qancha turishini ko'ra oladi.</p></div>
+                <div class="card"><h4>Tushuntiramiz</h4><p>Usul va manbalarni oddiy tilda, ingliz va o'zbek tillarida ko'rsatamiz.</p></div>
+            </div>
+
+            <h3>Tamoyillarimiz</h3>
+            <ul>
+                <li><strong>Taxminlar ochiq.</strong> Saytdagi har bir raqam baho sifatida belgilangan va o'zgartirilishi mumkin.</li>
+                <li><strong>Xarajat ham, foyda ham muhim.</strong> Biz xarajat tomonini o'lchaymiz. Qoida xarajat keltirgani uchun yomon, demaymiz.</li>
+                <li><strong>To'ldiramiz, almashtirmaymiz.</strong> Regulometer rasmiy ta'sir baholashlarni qo'llab-quvvatlaydi. Ularning o'rnini bosmaydi.</li>
+                <li><strong>Tuzatish mumkin.</strong> Raqam yoki huquqiy tafsilot noto'g'ri bo'lsa, u tez va ochiq tuzatilishi kerak.</li>
+            </ul>
+
+            <h3>Qayerga borishi mumkin</h3>
+            <div class="roadmap">
+                <div class="card"><small>Hozir · 2026-yil avgustdan</small><h4>Birinchi amaliy misol</h4><p>Loyiha 2026-yil avgustda boshlandi. E-aktiv (595-son qaror) boshidan oxirigacha o'lchandi, ishlaydigan simulyator bilan.</p></div>
+                <div class="card"><small>Keyingi</small><h4>Yaxshiroq ma'lumot</h4><p>Taxminlarni buxgalter va korxonalarning vaqt o'lchovlari bilan almashtirish, natijalarni korxona hajmi bo'yicha ajratish.</p></div>
+                <div class="card"><small>Keyinroq</small><h4>Ko'proq qonunlar</h4><p>Shu shablonni boshqa takrorlanuvchi hisobot majburiyatlariga qo'llash va ma'lumotlarni ochiq e'lon qilish.</p></div>
+            </div>
+
+            <div class="author-bio">
+                <div>
+                    <p style="font-size: 1.2rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">Bahodir Muzaffarov</p>
+                    <p style="color: var(--primary); font-weight: 600; font-size: 0.9rem; margin-bottom: 15px; text-transform: uppercase;">Huquqshunos va Dasturchi</p>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0;">Buxoro Prezident maktabidagi STEM poydevori hamda Toshkent davlat yuridik universiteti (TDYU)dagi huquqiy bilimlari yordamida Bahodir matematik tahlil va huquqiy tizimlarni integratsiya qiladi. U Adliya vazirligida amaliyotchi sifatida ishlab, <em>lawyer.ijro.uz</em> platformasida matnlarni tahlil qilgan. Hozirda Slovakiyadagi Pavol Yozef Shafarik universitetida tahsil olayotgan Bahodir, raqamli vositalar biznes uchun ma'muriy yukni qanday kamaytirishi mumkinligini o'rganmoqda.</p>
+                </div>
+            </div>
+
+            <div class="cta">
+                <h4>Xato topdingizmi yoki yaxshiroq ma'lumotingiz bormi?</h4>
+                <p>Tuzatishlar, o'z buxgalteriya ishingizdan olingan vaqt o'lchovlari va o'lchash uchun keyingi qonun bo'yicha g'oyalar xush kelibsiz. Iltimos, regulometer.com orqali muallifga yuboring.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<footer><b>regulometer.com</b> · Bahodir Muzaffarov · <span class="lang-en">Since August 2026</span><span class="lang-uz">2026-yil avgustdan</span></footer>
+
+<script>
+    // Tab Switching Logic
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-btn').forEach(btn => { btn.classList.remove('active'); btn.setAttribute('aria-selected','false'); });
+        document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+
+        document.getElementById('tab-' + tabId).classList.add('active');
+        document.getElementById('tab-' + tabId).setAttribute('aria-selected','true');
+        document.getElementById('pane-' + tabId).classList.add('active');
+        document.getElementById('hero').style.display = (tabId === 'assessment') ? '' : 'none';
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    const USD_RATE = 12700; 
+    const WORKING_DAYS = 250;
+    const MONTHS = 12;
+
+    const uiDict = {
+        en: {
+            calcTitle: "Policy Simulation Engine",
+            calcDesc: "Drag the sliders to simulate how changing reporting frequencies or exempting businesses impacts the national economy.",
+            tariff: "Hourly Tariff (Accountant Wage + Overhead)",
+            businesses: "Affected VAT-Registered Businesses",
+            daily: "Daily Inventory Logging (Hours/Day)",
+            monthly: "Monthly Reconciliation (Hours/Month)",
+            costSme: "Annual Cost per SME",
+            costMacro: "Total Macroeconomic Cost",
+            exchange: `* Exchange rate: 1 USD = ${USD_RATE.toLocaleString()} UZS`
+        },
+        uz: {
+            calcTitle: "Siyosatni Modellashtirish Dvigateli",
+            calcDesc: "Hisobot chastotasini kamaytirish makroiqtisodiy yukga qanday ta'sir qilishini ko'rish uchun slayderlarni torting.",
+            tariff: "Soatbay tarif (Buxgalter maoshi + Xarajatlar)",
+            businesses: "Qamrab olingan korxonalar soni",
+            daily: "Kunlik ma'lumot kiritish (Soat/Kun)",
+            monthly: "Oylik solishtirish va hisobot (Soat/Oy)",
+            costSme: "Bitta KOB uchun yillik xarajat",
+            costMacro: "Umumiy makroiqtisodiy xarajat",
+            exchange: `* Ayirboshlash kursi: 1 USD = ${USD_RATE.toLocaleString()} so'm`
+        }
+    };
+
+    const fmtUZS = new Intl.NumberFormat('en-US');
+    const fmtUSD = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+
+    function setLanguage(lang) {
+        document.body.classList.toggle('uz', lang === 'uz');
+        document.documentElement.lang = lang;
+        document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+        document.getElementById('btn-uz').classList.toggle('active', lang === 'uz');
+
+        document.getElementById('ui-calc-title').textContent = uiDict[lang].calcTitle;
+        document.getElementById('ui-calc-desc').textContent = uiDict[lang].calcDesc;
+        document.getElementById('ui-tariff').textContent = uiDict[lang].tariff;
+        document.getElementById('ui-businesses').textContent = uiDict[lang].businesses;
+        document.getElementById('ui-daily').textContent = uiDict[lang].daily;
+        document.getElementById('ui-monthly').textContent = uiDict[lang].monthly;
+        document.getElementById('ui-cost-sme').textContent = uiDict[lang].costSme;
+        document.getElementById('ui-cost-macro').textContent = uiDict[lang].costMacro;
+        document.getElementById('ui-exchange').textContent = uiDict[lang].exchange;
+    }
+
+    function calculate() {
+        const tariff = parseFloat(document.getElementById('in-tariff').value);
+        const businesses = parseFloat(document.getElementById('in-businesses').value);
+        const daily = parseFloat(document.getElementById('in-daily').value);
+        const monthly = parseFloat(document.getElementById('in-monthly').value);
+
+        document.getElementById('val-tariff').textContent = fmtUZS.format(tariff) + " UZS";
+        document.getElementById('val-businesses').textContent = fmtUZS.format(businesses);
+        document.getElementById('val-daily').textContent = daily;
+        document.getElementById('val-monthly').textContent = monthly;
+
+        const annualHoursPerSME = (daily * WORKING_DAYS) + (monthly * MONTHS);
+        const costPerSME_UZS = annualHoursPerSME * tariff;
+        const totalMacroCost_UZS = costPerSME_UZS * businesses;
+
+        const costPerSME_USD = costPerSME_UZS / USD_RATE;
+        const totalMacroCost_USD = totalMacroCost_UZS / USD_RATE;
+
+        document.getElementById('out-sme-uzs').textContent = fmtUZS.format(costPerSME_UZS) + " UZS";
+        document.getElementById('out-sme-usd').textContent = fmtUSD.format(costPerSME_USD);
+        
+        document.getElementById('out-macro-uzs').textContent = fmtUZS.format(totalMacroCost_UZS) + " UZS";
+        document.getElementById('out-macro-usd').textContent = fmtUSD.format(totalMacroCost_USD);
+    }
+
+    // Initialize math on load
+    calculate();
+</script>
+
+</body>
+</html>
