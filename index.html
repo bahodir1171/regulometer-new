@@ -258,6 +258,14 @@ footer b span{color:#fff!important}
 .container .badge.warn{background:var(--primary-light);border-color:#f0cccc;color:var(--primary)}
 .container tr.base td{background:var(--primary-light)}
 .container .ref,.container .refs a{color:var(--primary)}
+
+/* ---- contact button + footer email ---- */
+.cta-btn{display:inline-flex;align-items:center;gap:10px;margin-top:18px;background:#fff;color:var(--navy);font-weight:700;font-size:.98rem;padding:12px 22px;border-radius:8px;text-decoration:none;transition:transform .2s,box-shadow .2s,background .2s;word-break:break-all}
+.cta-btn:hover{background:var(--primary-light);transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.3)}
+.cta-btn:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.cta-btn svg{width:18px;height:18px;flex:none}
+footer a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+footer a:hover{color:#ff6b6b}
 </style>
 </head>
 <body>
@@ -805,7 +813,11 @@ footer b span{color:#fff!important}
 
             <div class="cta">
                 <h4>Spot a mistake or have better data?</h4>
-                <p>Corrections, timing data from your own accounting work and ideas for the next law to measure are welcome. Please send them to the author through regulometer.com.</p>
+                <p>Corrections, timing data from your own accounting work and ideas for the next law to measure are welcome. Write to the author directly by email.</p>
+                <a class="cta-btn" href="mailto:bahodirmuzaffarov5@gmail.com?subject=Regulometer%20feedback">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    bahodirmuzaffarov5@gmail.com
+                </a>
             </div>
         </div>
 
@@ -847,12 +859,16 @@ footer b span{color:#fff!important}
 
             <div class="cta">
                 <h4>Xato topdingizmi yoki yaxshiroq ma'lumotingiz bormi?</h4>
-                <p>Tuzatishlar, o'z buxgalteriya ishingizdan olingan vaqt o'lchovlari va o'lchash uchun keyingi qonun bo'yicha g'oyalar xush kelibsiz. Iltimos, regulometer.com orqali muallifga yuboring.</p>
+                <p>Tuzatishlar, o'z buxgalteriya ishingizdan olingan vaqt o'lchovlari va o'lchash uchun keyingi qonun bo'yicha g'oyalar xush kelibsiz. Muallifga to'g'ridan-to'g'ri email orqali yozing.</p>
+                <a class="cta-btn" href="mailto:bahodirmuzaffarov5@gmail.com?subject=Regulometer%20fikr-mulohaza">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    bahodirmuzaffarov5@gmail.com
+                </a>
             </div>
         </div>
     </div>
 </div>
-<footer><b>regulometer.com</b> · Bahodir Muzaffarov · <span class="lang-en">Since August 2026</span><span class="lang-uz">2026-yil avgustdan</span></footer>
+<footer><b>regulometer.com</b> · Bahodir Muzaffarov · <a href="mailto:bahodirmuzaffarov5@gmail.com">bahodirmuzaffarov5@gmail.com</a> · <span class="lang-en">Since August 2026</span><span class="lang-uz">2026-yil avgustdan</span></footer>
 
 <script>
     // Tab Switching Logic
